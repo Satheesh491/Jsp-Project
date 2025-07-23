@@ -22,10 +22,13 @@ public class Employee extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		    String name = request.getParameter("name");
+		    String department=request.getParameter("department");
+		    String salaryStr = request.getParameter("salary");
+	        double salary = Double.parseDouble(salaryStr);
 	        String email = request.getParameter("email");
 	        String phone = request.getParameter("phone");
-	        String salaryStr = request.getParameter("salary");
-	        double salary = Double.parseDouble(salaryStr);
+	        String doj = request.getParameter("doj"); 
+	        
 
 
 	        try {
@@ -36,14 +39,17 @@ public class Employee extends HttpServlet {
 	            Connection  conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/project", "root", "359035");
 
 	            // SQL Insert Query
-	            String sql = "INSERT INTO emp (Empname, email, phone, salary) VALUES (?, ?, ?, ?)";
+	            String sql = "INSERT INTO emp (Name,Department,Salary,Email,Phone,Date_Of_Joining) VALUES (?, ?, ?, ?,?,?)";
 	            PreparedStatement stmt = conn.prepareStatement(sql);
 
 	            // Set parameters
 	            stmt.setString(1, name);
-	            stmt.setString(2, email);
-	            stmt.setString(3, phone);
-	            stmt.setDouble(4, salary);
+	            stmt.setString(2, department);
+	            stmt.setDouble(3, salary);
+	            stmt.setString(4, email);
+	            stmt.setString(5, phone);
+	            stmt.setString(6, doj);
+	          
 
 	            // Execute update
 	            int rowsInserted = stmt.executeUpdate();
